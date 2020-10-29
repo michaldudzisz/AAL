@@ -37,11 +37,7 @@ int main(int argc, char *argv[]) {
         aIt++;
     }
 
-    if (bIt == b.end())
-        std::cout << "true" << std::endl;
-    else 
-        std::cout << "false" << std::endl;
-    
+    std::cout << (bIt == b.end() ? "true" : "false") << std::endl;
 
     return 0;
 }

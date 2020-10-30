@@ -1,15 +1,9 @@
 #include <string>
 #include <iostream>
 
-char capitalise(char c) {
-    if (c >= 'a' && c <= 'z')
-        c = c + ('A' - 'a');
-    return c;
-}
-
 bool containLowercaseLetter(std::string s) {
     for (char c : s) {
-        if (c >= 'a' && c <= 'z')
+        if (std::islower(c))
             return true;
     }
     return false;
@@ -31,13 +25,17 @@ int main(int argc, char *argv[]) {
     std::string::iterator bIt = b.begin();
     while (aIt != a.end() && bIt != b.end()) {
         // capitalise(*aIt), zeby moc porownac dowolna *aIt z na pewno wielka *bIt
-        if (capitalise(*aIt) == *bIt)
+        if (std::toupper(*aIt) == *bIt)
             bIt++;
 
         aIt++;
     }
 
-    std::cout << (bIt == b.end() ? "true" : "false") << std::endl;
+    if (bIt == b.end())
+        std::cout << "true" << std::endl;
+    else 
+        std::cout << "false" << std::endl;
+    
 
     return 0;
 }

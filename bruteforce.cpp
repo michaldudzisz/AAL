@@ -9,7 +9,7 @@ char capitalise(char c) {
 
 bool containLowercaseLetter(std::string s) {
     for (char c : s) {
-        if (c >= 'a' && c <= 'b')
+        if (c >= 'a' && c <= 'z')
             return true;
     }
     return false;

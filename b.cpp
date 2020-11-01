@@ -23,6 +23,10 @@ void run_tests(bool(*f)(string, string)) {
     assert(f("ANDZEJ", "ANDZEJ"));
     assert(f("andzej", "ANDZEJ"));
     assert(f("AZeaj", "AZJ"));
+    assert(!f("AZej", "AZe"));
+    assert(!f("ae", "a"));
+    assert(!f("AZe", "Aze"));
+    assert(!f("AZe", "AzE"));
     assert(!f("ad", "AB"));
     assert(!f("ada", "adb"));
     assert(!f("ada", "ADB"));
@@ -32,12 +36,14 @@ void run_tests(bool(*f)(string, string)) {
 
 bool solve3(string a, string b) {
     bool b_contains_lower = false; 
-    for(int i = 0, j = 0; i < b.length(); ++i, ++j) {
+    int j = 0;
+    for(int i = 0; i < b.length(); ++i, ++j) {
         if (islower(b[i])) b_contains_lower = true;
         for (; j < a.length() && a[j] != b[i] && toupper(a[j]) != b[i]; ++j)
             if (isupper(a[j]) || b_contains_lower) return false;
         if (j == a.length()) return false;
     }
+    for (; j < a.length(); ++j) if (isupper(a[j]) || b_contains_lower) return false;
     return true;
 }
 

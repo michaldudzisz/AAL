@@ -4,28 +4,38 @@
 using namespace std;
 
 bool solve2(string, string);
+bool solve3(string, string);
 void run_tests(bool(*)(string, string));
 
 int main(/*int argc, char** argv*/) {
-    run_tests(solve2);
+    run_tests(solve3);
 }
 
 void run_tests(bool(*f)(string, string)) {
-    assert((f("a", "a")));
+    assert(f("a", "a"));
+    assert(!f("b", "a"));
+    assert(f("a", ""));
     assert(f("AkLEKl", "ALEK"));
     assert(f("magda", "magda"));
+    assert(!f("eeeeewka", "ewka"));
+    assert(!f("ewwka", "ewka"));
     assert(f("ANDRZEJ", "ANDRZEJ"));
     assert(f("andrzej", "ANDRZEJ"));
     assert(f("ANDRZeadfadsfdasj", "ANDRZEJ"));
+    assert(!f("ad", "AB"));
+    assert(!f("ada", "adb"));
+    assert(!f("ada", "ADB"));
+    assert(!f("", "a"));
+    assert(!f("andrzej", "andrzejduda"));
 }
 
-bool solve2 (string a, string b) {
-    int j = 0;
-    bool b_contains_lower = false;
-    for (int i = 0; i < a.length(); ++i) {
-        if (islower(b[j])) b_contains_lower = true;
-        if (a[i] == b[j] || toupper(a[i]) == b[j]) ++j;
-        else if (isupper(a[i]) || b_contains_lower) return false;
+bool solve3(string a, string b) {
+    bool b_contains_lower = false; 
+    for(int i = 0, j = 0; i < b.length(); ++i, ++j) {
+        if (islower(b[i])) b_contains_lower = true;
+        for (; j < a.length() && a[j] != b[i] && toupper(a[j]) != b[i]; ++j)
+            if (isupper(a[j]) || b_contains_lower) return false;
+        if (j == a.length()) return false;
     }
     return true;
 }

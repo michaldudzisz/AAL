@@ -3,30 +3,31 @@
 
 using namespace std;
 
-bool solve2(string, string);
+bool bf(string, string);
 bool solve3(string, string);
 void run_tests(bool(*)(string, string));
 
 int main(/*int argc, char** argv*/) {
     run_tests(solve3);
+    run_tests(bf);
 }
 
 void run_tests(bool(*f)(string, string)) {
     assert(f("a", "a"));
     assert(!f("b", "a"));
     assert(f("a", ""));
-    assert(f("AkLEKl", "ALEK"));
+    assert(f("AkLKl", "ALK"));
     assert(f("magda", "magda"));
-    assert(!f("eeeeewka", "ewka"));
+    assert(!f("eeewka", "ewka"));
     assert(!f("ewwka", "ewka"));
-    assert(f("ANDRZEJ", "ANDRZEJ"));
-    assert(f("andrzej", "ANDRZEJ"));
-    assert(f("ANDRZeadfadsfdasj", "ANDRZEJ"));
+    assert(f("ANDZEJ", "ANDZEJ"));
+    assert(f("andzej", "ANDZEJ"));
+    assert(f("AZeaj", "AZJ"));
     assert(!f("ad", "AB"));
     assert(!f("ada", "adb"));
     assert(!f("ada", "ADB"));
     assert(!f("", "a"));
-    assert(!f("andrzej", "andrzejduda"));
+    assert(!f("andej", "andejduda"));
 }
 
 bool solve3(string a, string b) {
@@ -38,4 +39,36 @@ bool solve3(string a, string b) {
         if (j == a.length()) return false;
     }
     return true;
+}
+
+// generate all possibs from string a
+// a = abc, b = BC
+// abc
+// Abc -> A
+// ABc -> AB
+// ABC -> ABC
+// aBc -> B
+// aBC -> BC <- found!
+// abC -> C
+// check if string b is in generated possibs
+
+string del_low_case (string& s) {
+    string ans = "";
+    for (const char& ch : s) if(isupper(ch)) ans += ch;
+    return ans;
+}
+
+bool helper(const string& b, string s, int i) {
+    if (i == s.length()) return b == del_low_case(s);
+    bool res = helper(b, s, i + 1);
+    if (islower(s[i])) { 
+        s[i] = toupper(s[i]);   
+        res = res || helper(b, s, i + 1);
+    }
+    return res;
+}
+
+bool bf(string a, string b) {
+    if (a == b) return true;
+    return helper(b, a, 0);
 }

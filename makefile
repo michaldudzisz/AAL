@@ -3,10 +3,11 @@ CFLAGS=-I.
 DEPS = algo.h
 OBJ = algo.o main.o
 
+main: main.o algo.o
+	$(CC) -o main main.o algo.o
 
-main: main.cpp algo.cpp
-	g++ algo.cpp main.cpp
-
-
+.PHONY: clean
+clean:
+	rm *.o main
 
 

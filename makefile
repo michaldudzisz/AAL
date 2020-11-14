@@ -1,4 +1,4 @@
-CFLAGS = -L./lib -lyaml-cpp -I ./include/
+CFLAGS = -L./lib -lyaml-cpp -I ./lib/include/ -std=c++17
 OBJECTS = b bruteforce test-generator
 CC = g++
 

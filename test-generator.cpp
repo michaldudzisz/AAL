@@ -10,17 +10,14 @@
 #include <string>
 #include <iostream>
 #include <cstdlib>
-#include <ctime>
 #include <fstream>
+#include <random>
 
 #include "yaml-cpp/yaml.h"
 
 
 
 const int DEFAULT_CASE_NR = 1;
-const int DEFAULT_B_LENGTH = 10;
-const double DEFAULT_MAX_A_FACTOR = 2;          // how many times is max a longer than b (a_max = b * maxAFactor_;)
-
 
 
 class InvalidCallException : public std::exception {
@@ -102,13 +99,12 @@ public:
 
     inline static char generateChar(double lowercase_probability) {
 
-        char c;
-        bool is_lower = ( ((double) std::rand() / RAND_MAX) <= lowercase_probability ) ? true : false;
-        if (is_lower) {
-            c = 'a' + (std::rand() % ('z' - 'a'));
-        } else {
-            c = 'A' + (std::rand() % ('Z' - 'A'));
-        }
+        bool is_lower = ( probabilityDistribution_(generator_) <= lowercase_probability ) ? true : false;
+
+        char c = characterDistribution_(generator_);
+
+        if (!is_lower)
+            c = std::toupper(c);
 
         return c;
     }
@@ -133,13 +129,12 @@ public:
 
         std::string a = std::string(b);
         // minALength + rand(0, maxA - b.length(), aStep):
-        int a_longer_b = ( (int) (b.length() * minAFactor_) ) + (std::rand() % (int) ( ( ( (int) (b.length() * maxAFactor_) ) - b.length() ) / aStep_)) * aStep_;
-
+        int a_longer_b = std::uniform_int_distribution<int>(0, ( (int) (b.length() * maxAFactor_) - b.length() ) / aStep_)(generator_);
 
         int where_to_insert;
         for (int i = 0; i < a_longer_b; i++) {
             where_to_insert = std::rand() % a.length();
-            a.insert(a.begin() + (std::rand() % a.length()), generateChar(aLowercaseProbability_));
+            a.insert(a.begin() + where_to_insert, generateChar(aLowercaseProbability_));
         }
 
         return a;
@@ -186,6 +181,10 @@ public:
 private:
 
 
+    inline static std::default_random_engine generator_;
+    inline static std::uniform_int_distribution<char> characterDistribution_ = std::uniform_int_distribution<char>('a', 'z');
+    inline static std::uniform_real_distribution<double> probabilityDistribution_ = std::uniform_real_distribution<double>(0, 1);
+
     inline static std::string fileName_;
     inline static int caseNr_;
     inline static int bLength_;
@@ -208,7 +207,7 @@ private:
 
 int main(int argc, char * argv[]) {
 
-    std::srand(std::time(nullptr));
+    std::srand(time(NULL));
 
     try {
         Config::saveCallParams(argc, argv);

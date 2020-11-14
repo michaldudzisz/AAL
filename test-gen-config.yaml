@@ -1,6 +1,6 @@
-bLength: 10                      # integer
+bLength: 2                      # integer
 minAFactor: 1                    # double, should be >= 1 and <= maxAFactor
-maxAFactor: 2                    # double 
+maxAFactor: 3                   # double 
 aStep: 1                         # integer 
 aLowercaseProbability: 0.99      # double 
 bLowercaseProbability: 0.01      # double 

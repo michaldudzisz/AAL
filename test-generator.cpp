@@ -21,17 +21,6 @@ const int DEFAULT_CASE_NR = 1;
 const int DEFAULT_B_LENGTH = 10;
 const double DEFAULT_MAX_A_FACTOR = 2;          // how many times is max a longer than b (a_max = b * maxAFactor_;)
 
-/*
-const int CASES_NR = 1;
-
-const double B_LOWERCASE_PROBABILITY = 0.01;
-
-const double A_LOWERCASE_PROBABILITY = 0.99;
-const int A_LONGER_B_MIN = 0;
-const int A_LONGER_B_STEP = 5;
-const int A_LONGER_B_MAX = 50;
-*/
-
 
 
 class InvalidCallException : public std::exception {

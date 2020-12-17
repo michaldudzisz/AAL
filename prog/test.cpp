@@ -6,8 +6,11 @@ using namespace std;
 
 void run_tests(bool(*f)(string, string)) {
     cout << "start tests" << endl; 
+    assert(f("a", "A"));
     assert(f("a", "a"));
     assert(!f("b", "a"));
+    assert(!f("abcXm", "Xm"));
+    assert(!f("GX", "X"));
     assert(f("a", ""));
     assert(f("AkLKl", "ALK"));
     assert(f("magda", "magda"));
@@ -27,6 +30,8 @@ void run_tests(bool(*f)(string, string)) {
     assert(!f("andej", "andejduda"));
     assert(f("bB", "B"));
     assert(!f("abcBx", "abcBX"));
+    assert(f("aaaXbbbddCffE", "XCE"));
+    assert(!f("Xge", "Xg"));
     cout << "Ok" << endl;
 }
 

@@ -1,4 +1,4 @@
-bLength: 2                      # integer
+bLength: 4                     # integer
 minAFactor: 1                    # double, should be >= 1 and <= maxAFactor
 maxAFactor: 3                   # double 
 aStep: 1                         # integer 

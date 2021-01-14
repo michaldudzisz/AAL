@@ -8,6 +8,7 @@ void run_tests(bool(*f)(string, string)) {
     cout << "start tests" << endl; 
     assert(f("a", "A"));
     assert(f("a", "a"));
+    assert(!f("bb", "b"));
     assert(!f("b", "a"));
     assert(f("aA", "AA"));
     assert(f("Bb", "Bb"));

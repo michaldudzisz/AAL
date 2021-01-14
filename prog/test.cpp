@@ -9,6 +9,15 @@ void run_tests(bool(*f)(string, string)) {
     assert(f("a", "A"));
     assert(f("a", "a"));
     assert(!f("b", "a"));
+    assert(f("aA", "AA"));
+    assert(f("Bb", "Bb"));
+    assert(!f("bb", "Bb"));
+    assert(!f("bb", "bB"));
+    assert(!f("aAa", "aaA"));
+    assert(f("aAaAa", "AAAAA"));
+    assert(!f("BbbB", "BBbB"));
+    assert(f("BbBB", "BBBB"));
+    assert(f("BbBb", "BB"));
     assert(!f("abcXm", "Xm"));
     assert(!f("GX", "X"));
     assert(f("a", ""));
@@ -29,9 +38,13 @@ void run_tests(bool(*f)(string, string)) {
     assert(!f("", "a"));
     assert(!f("andej", "andejduda"));
     assert(f("bB", "B"));
+    assert(f("abXXdd", "AXX"));
+    assert(f("Aa", "A"));
+    assert(f("aAa", "A"));
+    assert(f("bAc", "A"));
     assert(!f("abcBx", "abcBX"));
     assert(f("aaaXbbbddCffE", "XCE"));
     assert(!f("Xge", "Xg"));
-    cout << "Ok" << endl;
-}
+    
+    cout << "Ok" << endl; }
 

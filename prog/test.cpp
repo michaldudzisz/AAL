@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void run_tests(bool(*f)(string, string)) {
+void run_tests(bool(f)(string, string)) {
     cout << "start tests" << endl; 
     assert(f("a", "A"));
     assert(f("a", "a"));
@@ -46,6 +46,8 @@ void run_tests(bool(*f)(string, string)) {
     assert(!f("abcBx", "abcBX"));
     assert(f("aaaXbbbddCffE", "XCE"));
     assert(!f("Xge", "Xg"));
+
+    assert(f("abbbcbca", "ABCA"));
     
     cout << "Ok" << endl; }
 

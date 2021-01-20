@@ -3,6 +3,6 @@
 
 #include <string>
 
-void run_tests(bool(*f)(std::string, std::string));
+void run_tests(bool(f)(std::string, std::string));
 
 #endif

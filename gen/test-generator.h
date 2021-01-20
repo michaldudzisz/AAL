@@ -51,6 +51,7 @@ private:
     static TestGenerator *instance_;
 
     bool caseNrSpecifiedFromCmd_ = false;
+    bool pyramidMode_ = false;
     bool outputToFile_ = false;
     std::string fileName_;
     int caseNr_;

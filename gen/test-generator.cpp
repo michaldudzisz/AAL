@@ -55,7 +55,7 @@ void TestGenerator::saveCallParams(int argc, char *argv[])
                 i++;
                 if (i == argc)
                     throw InvalidCallException();
-                    caseNrSpecifiedFromCmd_ = true;
+                caseNrSpecifiedFromCmd_ = true;
                 try
                 {
                     caseNr_ = std::stoi(std::string(argv[i]));
@@ -64,6 +64,9 @@ void TestGenerator::saveCallParams(int argc, char *argv[])
                 {
                     throw InvalidCallException();
                 }
+                break;
+            case 'p':
+                pyramidMode_ = true;
                 break;
             default:
                 throw InvalidCallException();
@@ -91,6 +94,9 @@ void TestGenerator::parseConfigFile(std::string filename)
     bLowercaseProbability_ = yaml_config["bLowercaseProbability"].as<double>();
     if (!caseNrSpecifiedFromCmd_)
         caseNr_ = yaml_config["casesToGenerate"].as<double>();
+
+    if (pyramidMode_)
+        caseNr_ = (int) ((bLength_ * maxAFactor_) / aStep_);
 }
 
 char TestGenerator::generateChar(double lowercase_probability)
@@ -120,7 +126,15 @@ std::string TestGenerator::generateStringB(int b_length)
 std::string TestGenerator::generateStringA(const std::string &b)
 {
     std::string a = std::string(b);
-    int a_longer_b = a_longer_b_distrib_(generator_);
+    static int current_step = -1; // in use in pyramid mode only
+    int a_longer_b;
+    if (pyramidMode_)
+    {
+        ++current_step;
+        a_longer_b = aStep_ * current_step;
+    }
+    else
+        a_longer_b = a_longer_b_distrib_(generator_);
 
     std::uniform_int_distribution<int> distrib =
         std::uniform_int_distribution<int>(0, a.length() + 1);
@@ -190,14 +204,16 @@ void TestGenerator::run()
         generateToDefaultOutput();
 }
 
-const char *PROPER_CALL_DESCRIPTION = 
-"Test generator should be called as: \n"
-"test-generetor <-f filename.txt> <-n number>\n\n"
-"Where <number> is integer value of generated test cases.\n"
-"Both -f and -n are optional. \nIf -f is not used, "
-"test cases are printed out into default output. \n"
-"If -n not used, test cases number is taken from test-gen-config.yaml file\n";
-
+const char *PROPER_CALL_DESCRIPTION =
+    "Test generator should be called as: \n"
+    "test-generetor <-f filename.txt> <-n number> <-p>\n\n"
+    "Where <number> is integer value of generated test cases.\n"
+    "Both -f and -n are optional. \n\n-f saves output to "
+    "<filename.txt> \nIf -f is not used, "
+    "test cases are printed out into default output. \n"
+    "-n specifies test cases number.\nIf -n not used, "
+    "test cases number is taken from test-gen-config.yaml file\n"
+    "-p forces pyramid mode, then -n is not used.\n";
 
 int main(int argc, char *argv[])
 {
@@ -226,10 +242,8 @@ int main(int argc, char *argv[])
         std::cout << "Loading yaml file - " << e.what() << std::endl;
         return 0;
     }
-    
+
     gen->run();
 
     return 0;
 }
-
-

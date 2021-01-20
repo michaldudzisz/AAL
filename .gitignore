@@ -4,3 +4,4 @@ test-generator
 output.txt
 a.out
 prog
+*.txt

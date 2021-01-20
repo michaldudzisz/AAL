@@ -1,18 +1,12 @@
 CFLAGS = -L./lib -lyaml-cpp -I ./lib/include/ -std=c++17
-OBJECTS = test-generator # b bruteforce 
+OBJECTS = test-generator 
 CC = g++
 
 all: $(OBJECTS)
-	
 
-test-generator: test-generator.cpp
+test-generator: test-generator.h test-generator.cpp
 	$(CC) $@.cpp -o $@ $(CFLAGS)
 
-#bruteforce: bruteforce.cpp
-#	$(CC) $@.cpp -o $@ $(CFLAGS)
-
-#b: b.cpp
-#	$(CC) $@.cpp -o $@ $(CFLAGS)
 
 clean:
 	@rm *.o

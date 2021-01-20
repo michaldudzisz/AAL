@@ -33,7 +33,7 @@ public:
   std::pair<bool, std::chrono::duration<double>> solve_and_calc_time(
       const std::string&, const std::string&, bool(*)(const std::string&, const std::string&));
   
-  void test_params();
+  void args_info();
 
 private:
   std::unordered_map<int, Config> config_map_;

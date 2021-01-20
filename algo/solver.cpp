@@ -2,11 +2,18 @@
 
 using namespace std;
 
-void Solver::test_params() {
-  cout << "if_count_time_: " << if_count_time_ << endl;
+void Solver::args_info() {
+
+  if (if_count_time_) {
+    cout << "counting time" << endl;
+  } else {
+    cout << "no counting time" << endl;
+  }
+
   bool a = if_count_time_;
   cout << "input_file_name: " << input_file_name_ << endl;
   for_each(config_map_.begin(), config_map_.end(), [&](pair<int, Config> x) {
+    cout << "algorithm nr: " << x.first << endl;
     cout << "x.output_file_name_ " << x.second.output_file_name_ << endl;
     if (a) {
       cout << "x.output_time_file_name_: " << x.second.output_time_file_name_ << endl; 
@@ -38,7 +45,6 @@ pair<bool, chrono::duration<double>> Solver::solve_and_calc_time(
 
 void Solver::handle_args(int argc, char** argv) {
   for (int i = 1; i < argc; ++i) {
-    cout << i << endl;
     switch (argv[i][1]) {
       case '0': {
         ++i;
@@ -57,28 +63,17 @@ void Solver::handle_args(int argc, char** argv) {
         break;
       }
       case '1': {
-        cout << "test1" << endl;
         ++i;
-        if(i == argc) throw InvalidCallException();
-
-        cout << "test1" << endl;
-
+        if(i == argc) throw InvalidCallException();  
         Config config;
         config.output_file_name_ = string(argv[i]);
 
-        cout << "test1" << endl;
-
         if (if_count_time_) {
-          cout << "test32" << endl;
           ++i;
           if (i == argc) throw InvalidCallException();
           config.output_time_file_name_ = string(argv[i]);
-        } 
-
+        }
         config_map_[1] = config;
-
-        cout << "test1" << endl;
-
         }
         break;
       
@@ -87,8 +82,8 @@ void Solver::handle_args(int argc, char** argv) {
         input_file_name_ = string(argv[i]);
         break;
 
-      case 't': ++i;
-        if(i != 2) throw InvalidCallException();
+      case 't': 
+        if(i != 1) throw InvalidCallException();
         if_count_time_ = true;
         break;
       
@@ -96,8 +91,7 @@ void Solver::handle_args(int argc, char** argv) {
     }
   } 
 
-  if (input_file_name_.empty()) 
-    throw InvalidCallException();
+  if (input_file_name_.empty()) throw InvalidCallException();
 }
 
 

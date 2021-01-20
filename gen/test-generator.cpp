@@ -92,17 +92,21 @@ void TestGenerator::parseConfigFile(std::string filename)
     aStep_ = yaml_config["aStep"].as<int>();
     aLowercaseProbability_ = yaml_config["aLowercaseProbability"].as<double>();
     bLowercaseProbability_ = yaml_config["bLowercaseProbability"].as<double>();
+    bToLowerProbability_ = yaml_config["bToLowerProbability"].as<double>();
     if (!caseNrSpecifiedFromCmd_)
         caseNr_ = yaml_config["casesToGenerate"].as<double>();
 
     if (pyramidMode_)
-        caseNr_ = (int) ((bLength_ * maxAFactor_) / aStep_);
+        caseNr_ = (int)((bLength_ * maxAFactor_) / aStep_);
 }
 
 char TestGenerator::generateChar(double lowercase_probability)
 {
 
-    bool is_lower = (probabilityDistribution_(generator_) <= lowercase_probability) ? true : false;
+    bool is_lower = (probabilityDistribution_(generator_) <=
+                     lowercase_probability)
+                        ? true
+                        : false;
 
     char c = characterDistribution_(generator_);
 
@@ -138,6 +142,12 @@ std::string TestGenerator::generateStringA(const std::string &b)
 
     std::uniform_int_distribution<int> distrib =
         std::uniform_int_distribution<int>(0, a.length() + 1);
+
+    for (char &c : a)
+    {
+        if (probabilityDistribution_(generator_) <= bToLowerProbability_) 
+            c = std::tolower(c);
+    }
 
     int where_to_insert;
     for (int i = 0; i < a_longer_b; i++)

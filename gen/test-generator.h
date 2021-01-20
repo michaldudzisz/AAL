@@ -61,6 +61,7 @@ private:
     int aStep_;
     double aLowercaseProbability_;
     double bLowercaseProbability_;
+    double bToLowerProbability_;
 
     std::mt19937 generator_;
 

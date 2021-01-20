@@ -3,7 +3,7 @@
 
 #include <string>
 
-bool bf(std::string, std::string);
-bool solve_dp(std::string, std::string);
+bool bf(const std::string&, const std::string&);
+bool solve_dp(const std::string&, const std::string&);
 
 #endif

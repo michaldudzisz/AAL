@@ -7,9 +7,10 @@ string del_low_case(string& s);
 bool helper (const string& b, string s, int i);
 
 // brute force solution generate all permutations
-bool bf(string a, string b) {
+bool bf(const string& a, const string& b) {
     if (a == b) return true;
-    return helper(b, a, 0);
+    string a_tmp = a;
+    return helper(b, a_tmp, 0);
 }
 
 string del_low_case (string& s) {
@@ -39,7 +40,7 @@ void print_vec (vector<vector<bool>> V) {
 }
   
 // dynamic programming solution O(n*m)
-bool solve_dp(string a, string b) {
+bool solve_dp(const string& a, const string& b) {
   int n = a.length();
   int m = b.length();
 

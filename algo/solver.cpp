@@ -1,6 +1,24 @@
 #include "solver.h"
 
+
 using namespace std;
+
+
+Solver::Solver() : if_count_time_(false) {
+  
+}
+
+const vector<bool(*)(const string&, const string&)> Solver::functions_ = {&bf, &solve_dp};
+
+Config::Config () {
+
+}
+
+
+
+void Solver::generate_solutions() {
+
+}
 
 void Solver::args_info() {
 
@@ -19,14 +37,6 @@ void Solver::args_info() {
       cout << "x.output_time_file_name_: " << x.second.output_time_file_name_ << endl; 
     }
   });
-}
-
-Solver::Solver() : if_count_time_(false) {
-  
-}
-
-Config::Config () {
-
 }
 
 pair<bool, chrono::duration<double>> Solver::solve_and_calc_time(
@@ -49,16 +59,13 @@ void Solver::handle_args(int argc, char** argv) {
       case '0': {
         ++i;
         if (i == argc) throw InvalidCallException();
-        
         Config config;
         config.output_file_name_ = string(argv[i]);
-
         if (if_count_time_) {
           ++i;
           if (i == argc) throw InvalidCallException();
           config.output_time_file_name_ = string(argv[i]);
         } 
-
         config_map_[0] = config;
         break;
       }
@@ -67,7 +74,6 @@ void Solver::handle_args(int argc, char** argv) {
         if(i == argc) throw InvalidCallException();  
         Config config;
         config.output_file_name_ = string(argv[i]);
-
         if (if_count_time_) {
           ++i;
           if (i == argc) throw InvalidCallException();
@@ -90,10 +96,5 @@ void Solver::handle_args(int argc, char** argv) {
       default: break;
     }
   } 
-
   if (input_file_name_.empty()) throw InvalidCallException();
 }
-
-
-
-

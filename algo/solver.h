@@ -1,6 +1,7 @@
 #ifndef SOLVER_H_
 #define SOLVER_H_
 
+#include <fstream>
 #include <exception>
 #include <vector>
 #include <string>
@@ -10,6 +11,7 @@
 #include <unordered_map>
 #include <algorithm>
 #include <iostream>
+#include "algo.h"
 
 class InvalidCallException : public std::exception {
 public:
@@ -29,16 +31,16 @@ class Solver {
 public:
   Solver();
   void handle_args(int argc, char** argv);
-  void generate_solutions(bool(*)(const std::string&, const std::string&));
+  void generate_solutions();
   std::pair<bool, std::chrono::duration<double>> solve_and_calc_time(
       const std::string&, const std::string&, bool(*)(const std::string&, const std::string&));
-  
   void args_info();
 
 private:
   std::unordered_map<int, Config> config_map_;
   std::string input_file_name_;
   bool if_count_time_;
+  static const std::vector<bool(*)(const std::string&, const std::string&)>functions_;
 };
 
 

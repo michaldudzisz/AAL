@@ -51,14 +51,17 @@ private:
     static TestGenerator *instance_;
 
     bool caseNrSpecifiedFromCmd_ = false;
-    bool pyramidMode_ = false;
+    bool fixedAMode_ = false;
+    bool fixedBMode_ = false;
     bool outputToFile_ = false;
     std::string fileName_;
     int caseNr_;
     int bLength_;
     double maxAFactor_;
     double minAFactor_;
+    double maxBFactor_;
     int aStep_;
+    int bStep_;
     double aLowercaseProbability_;
     double bLowercaseProbability_;
     double bToLowerProbability_;

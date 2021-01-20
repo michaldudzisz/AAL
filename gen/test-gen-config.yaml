@@ -1,8 +1,14 @@
+# fixed-b mode: a.length changes from bLength with aStep to maxAFactor * bLength
+# fixed-a mode: a.length = bLength * maxBFactor, 
+#               b.length changes from bLength with bStep to bLength * maxBFactor
+
 bLength: 4                       # integer, b string length
+maxBFactor: 6                    # double, used in fixed a mode only
+bStep: 1                         # integer, used in fixed a mode only
 minAFactor: 1                    # double, should be >= 1 and <= maxAFactor - how min many times is a longer than b
 maxAFactor: 5                    # double, - how max many times is a longer than b
-aStep: 1                         # integer - step, from b to maxA
+aStep: 2                         # integer - step, from b to maxA
 aLowercaseProbability: 0.99      # double - probability, that extra character in "a" string will be lowercase
-bLowercaseProbability: 0.01      # double - probability, that single character in "b" string is going to be lowercase
+bLowercaseProbability: 0.03      # double - probability, that single character in "b" string is going to be lowercase
 bToLowerProbability: 0.6         # double - pobability, that single character of "b" will be converted to lowercase creating "a" string
 casesToGenerate: 10              # integer - cases to generate

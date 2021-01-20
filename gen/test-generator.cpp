@@ -65,8 +65,13 @@ void TestGenerator::saveCallParams(int argc, char *argv[])
                     throw InvalidCallException();
                 }
                 break;
-            case 'p':
-                pyramidMode_ = true;
+            case 'a':
+                fixedBMode_ = true;
+                fixedAMode_ = false;
+                break;
+            case 'b':
+                fixedAMode_ = true;
+                fixedBMode_ = false;
                 break;
             default:
                 throw InvalidCallException();
@@ -93,11 +98,15 @@ void TestGenerator::parseConfigFile(std::string filename)
     aLowercaseProbability_ = yaml_config["aLowercaseProbability"].as<double>();
     bLowercaseProbability_ = yaml_config["bLowercaseProbability"].as<double>();
     bToLowerProbability_ = yaml_config["bToLowerProbability"].as<double>();
+    maxBFactor_ = yaml_config["maxBFactor"].as<double>();
+    bStep_ = yaml_config["bStep"].as<int>();
     if (!caseNrSpecifiedFromCmd_)
         caseNr_ = yaml_config["casesToGenerate"].as<double>();
 
-    if (pyramidMode_)
-        caseNr_ = (int)((bLength_ * maxAFactor_) / aStep_);
+    if (fixedBMode_)
+        caseNr_ = (int)((bLength_ * maxAFactor_ - bLength_) / aStep_);
+    if (fixedAMode_)
+        caseNr_ = (int)((bLength_ * maxBFactor_ - bLength_) / bStep_);
 }
 
 char TestGenerator::generateChar(double lowercase_probability)
@@ -118,11 +127,19 @@ char TestGenerator::generateChar(double lowercase_probability)
 
 std::string TestGenerator::generateStringB(int b_length)
 {
-
+    static int current_step = -1; // used in fixed-a mode only
     std::string s = std::string();
 
+    if (fixedAMode_)
+    {
+        ++current_step;
+        b_length += current_step * bStep_;
+    }
+
     for (int i = 0; i < b_length; i++)
+    {
         s.push_back(generateChar(bLowercaseProbability_));
+    }
 
     return s;
 }
@@ -130,22 +147,30 @@ std::string TestGenerator::generateStringB(int b_length)
 std::string TestGenerator::generateStringA(const std::string &b)
 {
     std::string a = std::string(b);
-    static int current_step = -1; // in use in pyramid mode only
+    static int current_step = -1; // used only in fixed modes
     int a_longer_b;
-    if (pyramidMode_)
+
+    if (fixedBMode_)
     {
         ++current_step;
         a_longer_b = aStep_ * current_step;
     }
+    else if (fixedAMode_)
+    {
+        ++current_step;
+        a_longer_b = bLength_ * maxBFactor_ - bLength_ - (current_step * bStep_);
+    }
     else
+    {
         a_longer_b = a_longer_b_distrib_(generator_);
+    }
 
     std::uniform_int_distribution<int> distrib =
         std::uniform_int_distribution<int>(0, a.length() + 1);
 
     for (char &c : a)
     {
-        if (probabilityDistribution_(generator_) <= bToLowerProbability_) 
+        if (probabilityDistribution_(generator_) <= bToLowerProbability_)
             c = std::tolower(c);
     }
 
@@ -179,7 +204,6 @@ void TestGenerator::generateToFile()
 
     for (int i = 0; i < caseNr_; i++)
     {
-
         b = generateStringB(bLength_);
         a = generateStringA(b);
 
@@ -196,7 +220,6 @@ void TestGenerator::generateToDefaultOutput()
 
     for (int i = 0; i < caseNr_; i++)
     {
-
         b = generateStringB(bLength_);
         a = generateStringA(b);
 
@@ -216,14 +239,15 @@ void TestGenerator::run()
 
 const char *PROPER_CALL_DESCRIPTION =
     "Test generator should be called as: \n"
-    "test-generetor <-f filename.txt> <-n number> <-p>\n\n"
+    "test-generetor <-f filename.txt> <-n number> <-a or -b>\n\n"
     "Where <number> is integer value of generated test cases.\n"
     "Both -f and -n are optional. \n\n-f saves output to "
     "<filename.txt> \nIf -f is not used, "
     "test cases are printed out into default output. \n"
     "-n specifies test cases number.\nIf -n not used, "
     "test cases number is taken from test-gen-config.yaml file\n"
-    "-p forces pyramid mode, then -n is not used.\n";
+    "-a forces fixed-b mode, then -n is not used.\n"
+    "-b forces fixed-a mode, then -n is not used.\n";
 
 int main(int argc, char *argv[])
 {

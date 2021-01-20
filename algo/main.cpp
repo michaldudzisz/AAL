@@ -11,7 +11,7 @@ int main(int argc, char** argv) {
   Solver solver;
   solver.handle_args(argc, argv);
   solver.args_info();
-  solver.generate_solutions();
+  solver.generate_all_solutions();
   
   return 0;
 }

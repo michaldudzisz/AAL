@@ -5,3 +5,5 @@ output.txt
 a.out
 prog
 *.txt
+.*
+!.gitignore

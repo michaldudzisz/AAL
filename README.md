@@ -43,6 +43,7 @@ Plik wyjściowy z pomiarem czasu zawiera, rozdzielone spacją, długość pierws
 * solver.h - plik nagłówkowy klasy Solver - obudowującej rozwiązywanie. Odpowiada m.in za wczytywanie danych, pomiar czasu, zapis do plików.
 * solver.cpp - plik źródłowy klasy Solver
 * main.cpp - plik źródłowy zawierający funkcję main
+* plot.py - skrypt Pythona rysujący wykres z danych wygenerowanych przez algorytmy
 
 # Generator
 

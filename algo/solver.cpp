@@ -63,9 +63,9 @@ void Solver::generate_all_solutions() {
 void Solver::args_info() {
 
   if (if_count_time_) {
-    cout << "counting time" << endl;
+    cout << "count time: yes" << endl;
   } else {
-    cout << "no counting time" << endl;
+    cout << "count time: no" << endl;
   }
 
   bool a = if_count_time_;
@@ -95,46 +95,50 @@ pair<bool, double> Solver::solve_and_calc_time(
 
 void Solver::handle_args(int argc, char** argv) {
   for (int i = 1; i < argc; ++i) {
-    switch (argv[i][1]) {
-      case '0': {
-        ++i;
-        if (i == argc) throw InvalidCallException();
-        Config config;
-        config.output_file_name_ = string(argv[i]);
-        if (if_count_time_) {
+    if ((argv[i][0] == '-' || argv[i][0] == '/') && std::string(argv[i]).length() == 2) {
+      switch (argv[i][1]) {
+        case '0': {
           ++i;
           if (i == argc) throw InvalidCallException();
-          config.output_time_file_name_ = string(argv[i]);
-        } 
-        config_map_[0] = config;
-        break;
-      }
-      case '1': {
-        ++i;
-        if(i == argc) throw InvalidCallException();  
-        Config config;
-        config.output_file_name_ = string(argv[i]);
-        if (if_count_time_) {
+          Config config;
+          config.output_file_name_ = string(argv[i]);
+          if (if_count_time_) {
+            ++i;
+            if (i == argc) throw InvalidCallException();
+            config.output_time_file_name_ = string(argv[i]);
+          } 
+          config_map_[0] = config;
+          break;
+        }
+        case '1': {
           ++i;
-          if (i == argc) throw InvalidCallException();
-          config.output_time_file_name_ = string(argv[i]);
-        }
-        config_map_[1] = config;
-        }
-        break;
-      
-      case 'i': ++i;
-        if(i == argc) throw InvalidCallException();
-        input_file_name_ = string(argv[i]);
-        break;
+          if(i == argc) throw InvalidCallException();  
+          Config config;
+          config.output_file_name_ = string(argv[i]);
+          if (if_count_time_) {
+            ++i;
+            if (i == argc) throw InvalidCallException();
+            config.output_time_file_name_ = string(argv[i]);
+          }
+          config_map_[1] = config;
+          }
+          break;
+        
+        case 'i': ++i;
+          if(i == argc) throw InvalidCallException();
+          input_file_name_ = string(argv[i]);
+          break;
 
-      case 't': 
-        if(i != 1) throw InvalidCallException();
-        if_count_time_ = true;
-        break;
-      
-      default: break;
+        case 't': 
+          if(i != 1) throw InvalidCallException();
+          if_count_time_ = true;
+          break;
+        
+        default: break;
+      }
+    } else {
+      throw InvalidCallException();
     }
-  } 
+  }
   if (input_file_name_.empty()) throw InvalidCallException();
 }

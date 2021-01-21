@@ -25,6 +25,9 @@ with open(filename) as file:
             testcases[i].append(float(char))
             i = i + 1
 
+print("Sumaryczna liczba rozpatrzonych przypadków: " + str(len(testcases[1])))
+print("Sumaryczny czas ich rozwiazywania: " + str(sum(testcases[2])))
+
 variable_string_index = 0 if variable_string == 'a' else 1
 plt.plot(testcases[variable_string_index], testcases[2])
 

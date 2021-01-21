@@ -1,7 +1,7 @@
 Projekt - Analiza Algorytmów \
 Michał Dudzisz, Michał Kruk
 
-## Zadanie
+# Zadanie
 Dozwolona jest jedna operacja na zmiennej typu string:
 1. Zmiana liter na wskazanych indeksach z małej na dużą,
 2. Skasowanie wszystkich pozostałych małych liter
@@ -44,7 +44,7 @@ Plik wyjściowy z pomiarem czasu zawiera, rozdzielone spacją, długość pierws
 * solver.cpp - plik źródłowy klasy Solver
 * main.cpp - plik źródłowy zawierający funkcję main
 
-### Generator
+# Generator
 
 Dostarczony został automatyczny generator danych (par napisów a i b) opisany poniżej.
 

@@ -24,6 +24,14 @@ W celu uruchomienia programu z pomiarem czasu działania: \
 `./prog -t -1 plik_wyjsciowy plik_wyjsciowy_dla_pomiaru_czasu -i plik_wejsciowy`
 W tym przypadku też można wybierać algorytm opcją -0 lub/i -1.
 
+### Wygenerowanie wykresu
+Potrzebne jest posiadanie biblioteki do Pythona matplotlib.
+Mając plik z danymi wyjściowymi pracy algorytmu, można wywołać skrypt rysujący wykres tych danych (czasu rozpatrywania danej pary napisów od długości napisu a lub b).
+Wywołanie:
+`python3 plot.py <filename> <-a lub -b>`
+
+gdzie `filename` to nazwa pliku z danymi wygenerowanym przez algorytmy, a opcje `-a` lub `-b` oznaczają, która z długości (napisu a lub b) będzie brana pod uwagę przy generowaniu wykresu czasu wykonania od długości napisu.
+
 ## Konwencja danych w plikach
 
 Plik wejściowy zawiera w każdej lini dwa rozdzielone spacją stringi, które są traktowane jako pojedyncze dane wejściowe algorytmu.

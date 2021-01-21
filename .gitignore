@@ -8,3 +8,7 @@ prog
 .*
 !.gitignore
 ./gen/yaml-cpp-master/*
+./gen/yaml-cpp-master/
+./gen/yaml-cpp-master
+yaml-cpp-master/*
+yaml-cpp-master

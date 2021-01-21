@@ -193,7 +193,8 @@ std::string TestGenerator::generateStringA(const std::string &b)
 void TestGenerator::initializeRNG()
 {
     int max_a_longer_b_steps = ((int)(bLength_ * maxAFactor_) - bLength_) / aStep_;
-    a_longer_b_distrib_ = std::uniform_int_distribution<std::mt19937::result_type>(0, max_a_longer_b_steps);
+    int min_a_longer_b_steps = ((int)(minAFactor_ * bLength_) - bLength_) / aStep_;
+    a_longer_b_distrib_ = std::uniform_int_distribution<std::mt19937::result_type>(min_a_longer_b_steps, max_a_longer_b_steps);
 }
 
 void TestGenerator::generateToFile()

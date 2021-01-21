@@ -39,8 +39,8 @@ Plik wyjściowy z pomiarem czasu zawiera, rozdzielone spacją, długość pierws
 
 ## Ogólny opis rozwiązania.
 W programie zaimplementowane są dwa algorytmy. \
-1. Siłowy - polega na generacji permutacji stringu a, możliwych do otrzymania przy pomocy operacji.  Dla każdej permutacji porównania jej ze stringiem b. Jeśli permutacja stringu a będzie taka sama jak string b, algorytm zwraca prawdę. Jeśli nie znajdzie się żadna odpowiednia permutacja, algorytm zwraca fałsz. Złożoność algorytmu O(n\*2^n). 
-2. Algorytm programowania dynamicznego, o złożoności O(n\*m). Algorytm rozwiązuje zadanie dla podproblemów, rozszerzając problem w kolejnych iteracjach. Do rozwiązania użyto vectora vectorów.
+1. Siłowy - polega na generacji permutacji stringu a, możliwych do otrzymania przy pomocy operacji.  Dla każdej permutacji porównania jej ze stringiem b. Jeśli permutacja stringu a będzie taka sama jak string b, algorytm zwraca prawdę. Jeśli nie znajdzie się żadna odpowiednia permutacja, algorytm zwraca fałsz. 
+2. Algorytm programowania dynamicznego, o złożoności O(n\*m), gdzie n - długość stringu a, m - długość stringu b. Algorytm rozwiązuje zadanie dla podproblemów, rozszerzając badany podproblem w kolejnych iteracjach, aż do rozwiązania całego problemu. Do rozwiązania użyto struktury vector ze standardowej biblioteki c++.
 
 ## Stuktura plików
 * algo.h - plik nagłówkowy algorytmów

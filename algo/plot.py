@@ -26,5 +26,10 @@ with open(filename) as file:
             i = i + 1
 
 variable_string_index = 0 if variable_string == 'a' else 1
-plt.plot(testcases[2], testcases[variable_string_index])
+plt.plot(testcases[variable_string_index], testcases[2])
+
+plt.xlabel('Długość napisu ' + variable_string + ' [znaki]')
+#plt.xlabel('Długość napisów a i b (a.length = b.length) [znaki]')
+plt.ylabel('Czas rozwiązania przypadku [s]')
+
 plt.show()

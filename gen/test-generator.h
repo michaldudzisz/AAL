@@ -53,6 +53,7 @@ private:
     bool caseNrSpecifiedFromCmd_ = false;
     bool fixedAMode_ = false;
     bool fixedBMode_ = false;
+    bool pyramidMode_ = false;
     bool outputToFile_ = false;
     std::string fileName_;
     int caseNr_;

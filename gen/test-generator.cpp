@@ -68,9 +68,16 @@ void TestGenerator::saveCallParams(int argc, char *argv[])
             case 'a':
                 fixedBMode_ = true;
                 fixedAMode_ = false;
+                pyramidMode_ = false;
                 break;
             case 'b':
                 fixedAMode_ = true;
+                fixedBMode_ = false;
+                pyramidMode_ = false;
+                break;
+            case 'p':
+                pyramidMode_ = true;
+                fixedAMode_ = false;
                 fixedBMode_ = false;
                 break;
             default:
@@ -103,9 +110,9 @@ void TestGenerator::parseConfigFile(std::string filename)
     if (!caseNrSpecifiedFromCmd_)
         caseNr_ = yaml_config["casesToGenerate"].as<double>();
 
-    if (fixedBMode_)
+    if (fixedBMode_ || pyramidMode_)
         caseNr_ = (int)((bLength_ * maxAFactor_ - bLength_) / aStep_);
-    if (fixedAMode_)
+    else if (fixedAMode_)
         caseNr_ = (int)((bLength_ * maxBFactor_ - bLength_) / bStep_);
 }
 
@@ -127,13 +134,13 @@ char TestGenerator::generateChar(double lowercase_probability)
 
 std::string TestGenerator::generateStringB(int b_length)
 {
-    static int current_step = -1; // used in fixed-a mode only
+    static int current_step = -1; // used in fixed-a or pyramid modes only
     std::string s = std::string();
 
-    if (fixedAMode_)
+    if (fixedAMode_ || pyramidMode_)
     {
         ++current_step;
-        b_length += current_step * bStep_;
+        b_length += fixedAMode_ ? (current_step * bStep_) : (current_step * aStep_);
     }
 
     for (int i = 0; i < b_length; i++)
@@ -147,7 +154,7 @@ std::string TestGenerator::generateStringB(int b_length)
 std::string TestGenerator::generateStringA(const std::string &b)
 {
     std::string a = std::string(b);
-    static int current_step = -1; // used only in fixed modes
+    static int current_step = -1; // used only in fixed or pyramid modes
     int a_longer_b;
 
     if (fixedBMode_)
@@ -159,6 +166,10 @@ std::string TestGenerator::generateStringA(const std::string &b)
     {
         ++current_step;
         a_longer_b = bLength_ * maxBFactor_ - bLength_ - (current_step * bStep_);
+    }
+    else if (pyramidMode_)
+    {
+        a_longer_b = 0;
     }
     else
     {
@@ -239,7 +250,7 @@ void TestGenerator::run()
 
 const char *PROPER_CALL_DESCRIPTION =
     "Test generator should be called as: \n"
-    "test-generetor <-f filename.txt> <-n number> <-a or -b>\n\n"
+    "test-generetor <-f filename.txt> <-n number> <-a or -b or -p>\n\n"
     "Where <number> is integer value of generated test cases.\n"
     "Both -f and -n are optional. \n\n-f saves output to "
     "<filename.txt> \nIf -f is not used, "
@@ -247,7 +258,8 @@ const char *PROPER_CALL_DESCRIPTION =
     "-n specifies test cases number.\nIf -n not used, "
     "test cases number is taken from test-gen-config.yaml file\n"
     "-a forces fixed-b mode, then -n is not used.\n"
-    "-b forces fixed-a mode, then -n is not used.\n";
+    "-b forces fixed-a mode, then -n is not used.\n"
+    "-p forces pyramid mode, then -n is not used.\n";
 
 int main(int argc, char *argv[])
 {

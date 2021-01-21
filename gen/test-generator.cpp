@@ -1,12 +1,3 @@
-/*
- *  AAL Projekt
- * 
- *  Generator danych testowych
- * 
- *  Michał Kruk
- *  Michał Dudzisz 
- */
-
 #include <string>
 #include <iostream>
 #include <cstdlib>

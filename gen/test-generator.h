@@ -1,12 +1,3 @@
-/*
- *  AAL Projekt
- * 
- *  Generator danych testowych
- * 
- *  Michał Kruk
- *  Michał Dudzisz 
- */
-
 #ifndef TEST_GENERATOR_H
 #define TEST_GENERATOR_H
 

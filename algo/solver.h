@@ -39,6 +39,7 @@ private:
   bool check_if_open(std::ofstream& f);
   bool check_if_open(std::ifstream& f);
   void generate_solutions(int i);
+  void set_algorithm_config(int argc, char** argv, int& i, const int alg_nr);
 
   std::unordered_map<int, Config> config_map_;
   std::string input_file_name_;

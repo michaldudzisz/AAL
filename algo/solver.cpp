@@ -4,7 +4,6 @@ using namespace std;
 
 const vector<bool(*)(const string&, const string&)> Solver::functions_ = {
   &bf, 
-  &solve_dynamic_programming, 
   &solve_dynamic_programming_opt
 };
 
@@ -44,6 +43,7 @@ void Solver::generate_solutions(int i) {
     size_t pos = line.find(' ');
     const string a = line.substr(0, pos); 
     const string b = line.substr(pos + 1);
+
     if (if_count_time_) {
       auto solution = solve_and_calc_time(a,b,i);
       output_file << a << " " << b << " " << solution.first << "\n";
@@ -58,7 +58,6 @@ void Solver::generate_solutions(int i) {
 }
 
 void Solver::generate_all_solutions() {
-  
   for (auto elem : config_map_) {
     generate_solutions(elem.first);  
   }
@@ -97,52 +96,35 @@ pair<bool, double> Solver::solve_and_calc_time(
   return make_pair(ans, time_ms.count());
 }
 
+void Solver::set_algorithm_config(int argc, char** argv, int& i, const int alg_nr) {
+  ++i;
+
+  if (i == argc) throw InvalidCallException();
+  Config config;
+  config.output_file_name_ = string(argv[i]);
+
+  if (if_count_time_) {
+    ++i;
+    if (i == argc) throw InvalidCallException();
+
+    config.output_time_file_name_ = string(argv[i]);
+  } 
+  config_map_[alg_nr] = config;
+
+}
+
 void Solver::handle_args(int argc, char** argv) {
   for (int i = 1; i < argc; ++i) {
     if ((argv[i][0] == '-' || argv[i][0] == '/') && std::string(argv[i]).length() == 2) {
       switch (argv[i][1]) {
-        case '0': {
-          ++i;
-          if (i == argc) throw InvalidCallException();
-          Config config;
-          config.output_file_name_ = string(argv[i]);
-          if (if_count_time_) {
-            ++i;
-            if (i == argc) throw InvalidCallException();
-            config.output_time_file_name_ = string(argv[i]);
-          } 
-          config_map_[0] = config;
-          break;
-        }
-
-        case '1': {
-          ++i;
-          if(i == argc) throw InvalidCallException();  
-          Config config;
-          config.output_file_name_ = string(argv[i]);
-          if (if_count_time_) {
-            ++i;
-            if (i == argc) throw InvalidCallException();
-            config.output_time_file_name_ = string(argv[i]);
-          }
-          config_map_[1] = config;
-          }
+        case '0': 
+          set_algorithm_config(argc, argv, i, 0);
           break;
 
-        case '2': {
-          ++i;
-          if(i == argc) throw InvalidCallException();  
-          Config config;
-          config.output_file_name_ = string(argv[i]);
-          if (if_count_time_) {
-            ++i;
-            if (i == argc) throw InvalidCallException();
-            config.output_time_file_name_ = string(argv[i]);
-          }
-          config_map_[2] = config;
-          }
+        case '1':
+          set_algorithm_config(argc, argv, i, 1);
           break;
-        
+
         case 'i': ++i;
           if(i == argc) throw InvalidCallException();
           input_file_name_ = string(argv[i]);

@@ -1,6 +1,5 @@
 #include <iostream>
 #include "algo.h"
-#include "test.h"
 #include <vector>
 #include "solver.h"
 #include <exception>

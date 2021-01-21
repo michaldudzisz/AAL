@@ -41,8 +41,10 @@ void Solver::generate_solutions(int i) {
   string line;
   while(getline (input_file,line)) {
     size_t pos = line.find(' ');
-    const string a = line.substr(0, pos); 
-    const string b = line.substr(pos + 1);
+    string a = line.substr(0, pos); 
+    string b = line.substr(pos + 1);
+    if (a == "*") a = "";
+    if (b == "*") b = "";
 
     if (if_count_time_) {
       auto solution = solve_and_calc_time(a,b,i);

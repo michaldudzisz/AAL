@@ -2,7 +2,7 @@
 
 using namespace std;
 
-const vector<bool(*)(const string&, const string&)> Solver::functions_ = {&bf, &solve_dp};
+const vector<bool(*)(const string&, const string&)> Solver::functions_ = {&bf, &solve_dynamic_programming};
 
 Solver::Solver() : if_count_time_(false) {
   

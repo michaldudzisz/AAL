@@ -1,4 +1,4 @@
-Projekt - Analiza Algorytmów
+Projekt - Analiza Algorytmów \
 Michał Dudzisz, Michał Kruk
 
 ## Zadanie

@@ -1,6 +1,8 @@
 #include "algo.h"
 #include <iostream>
 #include <vector>
+#include <algorithm>
+
 using namespace std;
 
 // dynamic programming solution O(n*m)
@@ -75,3 +77,39 @@ bool helper(const string& b, string s, int i) {
 }
 
 
+// dynamic programming solution O(n*m)
+bool solve_dynamic_programming_opt(const string& a, const string& b) {
+  int n = a.length(); int m = b.length();
+
+  vector<vector<bool>> arr (n+1, vector<bool> (m+1, false));
+  arr[0][0] = true;
+
+  bool b_contains_lower = false;
+  
+  for_each(b.begin(), b.end(), [&](const char& c) {
+      if (islower(c)) b_contains_lower = true;
+    });
+
+  for (int i = 0; i < a.length(); ++i) {
+    for (int j = 0; j <= b.length(); ++j) {
+      if (arr[i][j]) {
+
+        if (j < b.length()) {
+
+          if (a[i] == b[j]) {
+            arr[i+1][j+1] = true;
+          }
+
+          else if (toupper(a[i]) == b[j] && !b_contains_lower)  {
+            arr[i+1][j+1] = true;
+          }
+
+        }
+
+        if (!isupper(a[i]) && !b_contains_lower) 
+          arr[i + 1][j] = true; 
+      }
+    }
+  }
+  return arr[n][m];
+}

@@ -2,7 +2,11 @@
 
 using namespace std;
 
-const vector<bool(*)(const string&, const string&)> Solver::functions_ = {&bf, &solve_dynamic_programming};
+const vector<bool(*)(const string&, const string&)> Solver::functions_ = {
+  &bf, 
+  &solve_dynamic_programming, 
+  &solve_dynamic_programming_opt
+};
 
 Solver::Solver() : if_count_time_(false) {
   
@@ -110,6 +114,7 @@ void Solver::handle_args(int argc, char** argv) {
           config_map_[0] = config;
           break;
         }
+
         case '1': {
           ++i;
           if(i == argc) throw InvalidCallException();  
@@ -121,6 +126,20 @@ void Solver::handle_args(int argc, char** argv) {
             config.output_time_file_name_ = string(argv[i]);
           }
           config_map_[1] = config;
+          }
+          break;
+
+        case '2': {
+          ++i;
+          if(i == argc) throw InvalidCallException();  
+          Config config;
+          config.output_file_name_ = string(argv[i]);
+          if (if_count_time_) {
+            ++i;
+            if (i == argc) throw InvalidCallException();
+            config.output_time_file_name_ = string(argv[i]);
+          }
+          config_map_[2] = config;
           }
           break;
         

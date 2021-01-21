@@ -37,6 +37,17 @@ Przykład: \
 Plik wyjściowy z pomiarem czasu zawiera, rozdzielone spacją, długość pierwszego stringu, długość drugiego stringu, czas wykonania algorytmu w sekundach. Przykład: \
 `liczba1 liczba2 czas_trwania_obliczen`
 
+## Ogólny opis rozwiązania.
+W programie zaimplementowane są dwa algorytmy. \
+1. Siłowy - polega na generacji permutacji stringu a, możliwych do otrzymania przy pomocy operacji.  Dla każdej permutacji porównania jej ze stringiem b. Jeśli permutacja stringu a będzie taka sama jak string b, algorytm zwraca prawdę. Jeśli nie znajdzie się żadna odpowiednia permutacja, algorytm zwraca fałsz. Złożoność algorytmu O(n\*2^n). 
+2. Algorytm programowania dynamicznego, o złożoności O(n\*m). Algorytm rozwiązuje zadanie dla podproblemów, rozszerzając problem w kolejnych iteracjach. Do rozwiązania użyto vectora vectorów.
+
+## Stuktura plików
+* algo.h - plik nagłówkowy algorytmów
+* algo.cpp - plik źródłowy algorytmów
+* solver.h - plik nagłówkowy klasy Solver - obudowującej rozwiązywanie. Odpowiada m.in za wczytywanie danych, pomiar czasu, zapis do plików.
+* solver.cpp - plik źródłowy klasy Solver
+* main.cpp - plik źródłowy zawierający funkcję main
 
 
 

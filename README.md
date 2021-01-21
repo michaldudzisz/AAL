@@ -57,7 +57,14 @@ Puste stringi w pliku oznaczamy jako gwiazdkę.
 
 # Generator
 
-Dostarczony został automatyczny generator danych (par napisów a i b) opisany poniżej.
+Dostarczony został automatyczny generator danych (par napisów a i b) opisany poniżej. 
+
+### Zależności
+
+Przed przystąpieniem do budowania samego generatora należy pobrać bibliotekę `yaml-cpp` (https://github.com/jbeder/yaml-cpp), rozpakować jej folder w folderze `gen` projektu tak, aby bezpośrednio z poziomu `gen` widoczny był folder `yaml-cpp-master`. Wejść w ten folder, wywołać:
+1. `mkdir build && cd build`
+2. `cmake ..`
+3. `make`
 
 ## Budowanie generatora danych wejściowych
 W celu zbudowania programu zawierającego generator należy wykonać:

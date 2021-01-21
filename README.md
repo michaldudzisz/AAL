@@ -30,7 +30,7 @@ Mając plik z danymi wyjściowymi pracy algorytmu, można wywołać skrypt rysuj
 Wywołanie:
 `python3 plot.py <filename> <-a lub -b>`
 
-gdzie `filename` to nazwa pliku z danymi wygenerowanym przez algorytmy, a opcje `-a` lub `-b` oznaczają, która z długości (napisu a lub b) będzie brana pod uwagę przy generowaniu wykresu czasu wykonania od długości napisu.
+gdzie `filename` to nazwa pliku z danymi wygenerowanym przez algorytmy, a opcje `-a` lub `-b` oznaczają, która z długości (napisu a lub b) będzie brana pod uwagę przy generowaniu wykresu czasu wykonania od długości napisu. Skrypt jednocześnie sumuje czasy wykonywania wszystkich operacji w `filename`, co również może zostać użyte.
 
 ## Konwencja danych w plikach
 

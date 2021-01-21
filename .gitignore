@@ -7,3 +7,4 @@ prog
 *.txt
 .*
 !.gitignore
+./gen/yaml-cpp-master/*

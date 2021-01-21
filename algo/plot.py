@@ -1,6 +1,10 @@
 import matplotlib.pyplot as plt
 import sys
 
+# call example:
+# python3 plot.py plik.txt -a
+# draws f(x) = time(a.length)
+
 if len(sys.argv) != 3 or (sys.argv[2] != '-a' and sys.argv[2] != '-b'):
     print("Program should be called as:")
     print("<pyton executable> plot.py <filename> -<string to watch to>")
